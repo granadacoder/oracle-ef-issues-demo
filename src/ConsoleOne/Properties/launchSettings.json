@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MyCompany.MyExamples.EfPlaygroundOne.ConsoleOne": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
