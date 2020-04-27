@@ -17,6 +17,7 @@ using MyCompany.MyExamples.EfPlaygroundOne.BusinessLayer.Managers.Interfaces;
 using MyCompany.MyExamples.EfPlaygroundOne.DomainDataLayer.EntityFramework;
 using MyCompany.MyExamples.EfPlaygroundOne.DomainDataLayer.EntityFramework.Contexts;
 using MyCompany.MyExamples.EfPlaygroundOne.DomainDataLayer.EntityFramework.DataGenerators;
+using MyCompany.MyExamples.EfPlaygroundOne.DomainDataLayer.EntityFramework.OrmMaps.Constants;
 using MyCompany.MyExamples.EfPlaygroundOne.DomainDataLayer.Interfaces;
 
 #if (NETCOREAPP2_1 || NETSTANDARD2_0)
@@ -232,7 +233,8 @@ namespace MyCompany.MyExamples.EfPlaygroundOne.ConsoleOne
 #endif
 
             bool realRdbmsWasTriggered = false;
-            string didYouChangeReminder = "Did you change?\n\\src\\DataLayer.EntityFramework\\OrmMaps\\Constants\\SchemaNames.cs and\n\\src\\DataLayer.EntityFramework\\OrmMaps\\Constants\\SqlKeyWords.cs\nto match the RDBMS?";
+            string didYouChangeReminder = "PLEASE READ THIS:\nDid you change?\n\\src\\DataLayer.EntityFramework\\OrmMaps\\Constants\\SchemaNames.cs and\n\\src\\DataLayer.EntityFramework\\OrmMaps\\Constants\\SqlKeyWords.cs\n to match the RDBMS you are using??";
+            didYouChangeReminder += string.Format("\nSchemaNames.DefaultSchemaName='{0}', \nSqlKeyWords.CurrentTimeStamp='{1}', \nSqlKeyWords.CurrentUserDefault='{2}', \nSqlKeyWords.NewSequentialId='{3}'\n\n\n", SchemaNames.DefaultSchemaName, SqlKeyWords.CurrentTimeStamp, SqlKeyWords.CurrentUserDefault, SqlKeyWords.NewSequentialId);
 
             ////setup our DI
             IServiceCollection servColl = new ServiceCollection()
