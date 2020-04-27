@@ -145,3 +145,76 @@ The Generated Sql:
 [WRN] The LINQ expression 'Any()' could not be translated and will be evaluated locally.
 
 
+.................
+
+ORACLE Setup (other RDBMS as well, but especially Oracle)
+
+
+The place to change this code is:
+
+\src\DataLayer.EntityFramework\OrmMaps\Constants\SchemaNames.cs
+
+ 
+
+#if (NETCOREAPP2_1 || NETSTANDARD2_0)
+
+       public const string DefaultSchemaName = "MYORACLESCHEMAONE"; /* Oracle (??) It seems to require ALL-CAPS.  In Oracle, Users and Schemas are "the same". */
+
+#endif
+
+ 
+
+"MYORACLESCHEMAONE" also exists in the connection string in the appsettings.json (or appsettings.Development.json).
+
+ 
+
+=========================================
+
+Note, there is a subtle hint during the run-time.
+
+ 
+
+    Using Oracle EF
+    
+    PLEASE READ THIS:
+    Did you change?
+    \src\DataLayer.EntityFramework\OrmMaps\Constants\SchemaNames.cs and
+    \src\DataLayer.EntityFramework\OrmMaps\Constants\SqlKeyWords.cs
+     to match the RDBMS you are using??
+    SchemaNames.DefaultSchemaName='MYORACLESCHEMAONE',
+
+ 
+
+=========================================================
+
+ 
+
+If you want to run the code with this 'MyOracleSchemaOne' schema, you can run this (oracle specific) setup:
+
+ 
+
+    alter session set "_ORACLE_SCRIPT"=true;
+    create user MyOracleSchemaOne identified by mypassword;
+    grant connect, resource to MyOracleSchemaOne;
+    select count(*) from all_users where username='MYORACLESCHEMAONE'; /* case sensitive */
+    ALTER USER MyOracleSchemaOne quota unlimited on USERS; /* https://stackoverflow.com/questions/21671008/ora-01950-no-privileges-on-tablespace-users/21671145#21671145 */
+
+ 
+
+
+=============================================
+
+ 
+The below is not needed to run the example, but provides some hints about the schema setup for Oracle.
+ 
+
+https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_6014.htm
+
+
+
+"
+    Note:
+
+    This statement does not actually create a schema. Oracle Database automatically creates a schema when you create a user (see CREATE USER). This statement lets you populate your schema with tables and views and grant privileges on those objects without having to issue multiple SQL statements in multiple transactions.
+
+"
